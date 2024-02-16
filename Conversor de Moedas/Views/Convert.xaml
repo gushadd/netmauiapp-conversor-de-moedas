@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Conversor_de_Moedas.Views.Convert"            
+             Title="Conversor"
+             BackgroundColor="{AppThemeBinding Light=#DDDDDD, Dark=#505050}">
+
+    <ContentPage.Resources>
+        <!-- Light Mode Colors -->
+        <Color x:Key="LightPrimaryColor">#DDDDDD</Color>
+        <Color x:Key="LightSecondaryColor">#2ECC71</Color>
+        <Color x:Key="LightTertiaryColor">#505050</Color>
+        
+        <!-- Dark Mode Colors -->
+        <Color x:Key="DarkPrimaryColor">#505050</Color>
+        <Color x:Key="DarkSecondaryColor">#413F7D</Color>
+        <Color x:Key="DarkTertiaryColor">#252525</Color>
+        
+        <!-- Specific Colors -->
+        <Color x:Key="PlaceholderColor">Grey</Color>
+        
+        <!-- Styles -->
+        <Style x:Key="PickerOuterFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}"/>
+            <Setter Property="BorderColor" Value="Transparent"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="CornerRadius" Value="27"/>
+            <Setter Property="Padding" Value="8, 8, 8, 8"/>
+        </Style>
+
+        <Style x:Key="PickerInnerFrameStyle" TargetType="Frame">
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="WidthRequest" Value="275"/>
+            <Setter Property="Padding" Value="10,0,10,0"/>
+            <Setter Property="BorderColor" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="EditorFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}"/>
+            <Setter Property="BorderColor" Value="Transparent"/>
+            <Setter Property="HeightRequest" Value="45"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="Padding" Value="16, 0, 0 ,0"/>
+        </Style>
+
+        <Style x:Key="PickerStyle" TargetType="Picker">
+            <Setter Property="TitleColor" Value="{StaticResource DarkPrimaryColor}"/>
+            <Setter Property="TextColor" Value="{StaticResource DarkPrimaryColor}"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </ContentPage.Resources>    
+
+    <Grid RowDefinitions="*, 450">
+        
+        <VerticalStackLayout Padding="50" Spacing="20">
+            <Frame Style="{StaticResource PickerOuterFrameStyle}">
+                <HorizontalStackLayout Spacing="45">
+                    <Frame Style="{StaticResource PickerInnerFrameStyle}">
+                        <Picker x:Name="TopPicker" Style="{StaticResource PickerStyle}" Title="Selecione" ItemDisplayBinding="{Binding CurrencyName}" SelectedIndexChanged="TopPicker_SelectedIndexChanged"/>
+                    </Frame>
+                </HorizontalStackLayout>                
+            </Frame>
+            
+            <Image Source="{AppThemeBinding Light=arrow_light.png, Dark=arrow_dark.png}" HeightRequest="30" WidthRequest="30" Scale="2"/>
+
+            <Frame Style="{StaticResource PickerOuterFrameStyle}">
+                <HorizontalStackLayout Spacing="25">
+                    <Frame Style="{StaticResource PickerInnerFrameStyle}">
+                        <Picker x:Name="BottomPicker" Style="{StaticResource PickerStyle}" Title="Selecione" ItemDisplayBinding="{Binding CurrencyName}" SelectedIndexChanged="BottomPicker_SelectedIndexChanged"/>
+                    </Frame>
+                </HorizontalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+
+        <BoxView Grid.Row="1" BackgroundColor="Transparent" Color="{AppThemeBinding Light=#F4F2F2, Dark=#252525}" CornerRadius="25, 25, 0, 0"/>
+        
+        <VerticalStackLayout Grid.Row="1" Padding="50, 70, 50, 0" Spacing="30">
+                        
+            <Frame Style="{StaticResource EditorFrameStyle}">
+                <HorizontalStackLayout Spacing="10">
+                    <Label x:Name="TopCurrencyLabel" Text="   " FontSize="20" TextColor="{AppThemeBinding Light=#505050, Dark=#DDDDDD}" HorizontalOptions="Start" HeightRequest="27"/>
+                    <Editor x:Name="ValueEntry" Keyboard="Numeric" FontSize="20" Placeholder="Digite um valor    " PlaceholderColor="{StaticResource PlaceholderColor}" WidthRequest="200"/>
+                </HorizontalStackLayout>
+            </Frame>
+           
+            <Button x:Name="ConverterButton" 
+                    Text="CONVERTER" 
+                    TextColor="White" 
+                    FontSize="20" 
+                    BackgroundColor="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}" 
+                    CornerRadius="25" WidthRequest="150" 
+                    Clicked="ConverterButton_Clicked"/>
+
+            <Frame Style="{StaticResource EditorFrameStyle}">
+                <HorizontalStackLayout Spacing="10">
+                    <Label x:Name="BottomCurrencyLabel" Text="   " FontSize="20" TextColor="{AppThemeBinding Light=#505050, Dark=#DDDDDD}" HorizontalOptions="Start" HeightRequest="27"/>
+                    <Editor x:Name="ValueResult" FontSize="20" IsReadOnly="True" WidthRequest="200"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+        
+    </Grid>
+
+</ContentPage>
